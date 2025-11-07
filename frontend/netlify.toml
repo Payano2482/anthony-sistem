@@ -1,0 +1,22 @@
+# Configuración de Netlify para Anthony Sistem
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Redirecciones para SPA (Single Page Application)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers de seguridad
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
+    Permissions-Policy = "camera=*, microphone=*, geolocation=*, payment=*"
+
+[build.environment]
+  NODE_VERSION = "18"

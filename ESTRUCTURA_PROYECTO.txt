@@ -1,0 +1,272 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                     ANTHONY SYSTEM - ESTRUCTURA                      ║
+║                   Sistema de Gestión de Rentas                       ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+📁 AnthonySistem.App/
+│
+├── 📄 README.md                          # Documentación principal
+├── 📄 INICIO_RAPIDO.txt                  # Guía de inicio rápido
+├── 📄 INSTRUCCIONES_INSTALACION.md       # Guía de instalación detallada
+├── 📄 DESPLIEGUE.md                      # Guía de despliegue en producción
+├── 📄 .gitignore                         # Archivos ignorados por Git
+│
+├── 🚀 start_backend.bat                  # Script para iniciar backend
+├── 🚀 start_frontend.bat                 # Script para iniciar frontend
+│
+├── 📂 backend/                           # API REST (FastAPI + Python)
+│   │
+│   ├── 📂 database/                      # Base de datos
+│   │   ├── schema.sql                    # Esquema SQL
+│   │   ├── init_db.py                    # Inicializador
+│   │   └── anthony_system.db             # Base de datos SQLite (generada)
+│   │
+│   ├── 📄 main.py                        # Aplicación principal FastAPI
+│   ├── 📄 models.py                      # Modelos Pydantic
+│   ├── 📄 auth.py                        # Autenticación JWT
+│   ├── 📄 database_service.py            # Lógica de negocio
+│   ├── 📄 config.py                      # Configuración
+│   │
+│   ├── 📄 requirements.txt               # Dependencias Python
+│   ├── 📄 .env                           # Variables de entorno
+│   ├── 📄 .env.example                   # Ejemplo de variables
+│   └── 📄 README.md                      # Documentación del backend
+│
+└── 📂 frontend/                          # Aplicación Web (React + Vite)
+    │
+    ├── 📂 src/                           # Código fuente
+    │   │
+    │   ├── 📂 components/                # Componentes reutilizables
+    │   │   └── Layout.jsx                # Layout principal con navegación
+    │   │
+    │   ├── 📂 context/                   # Contextos de React
+    │   │   └── AuthContext.jsx           # Contexto de autenticación
+    │   │
+    │   ├── 📂 pages/                     # Páginas de la aplicación
+    │   │   ├── Login.jsx                 # Página de login
+    │   │   ├── Dashboard.jsx             # Dashboard principal
+    │   │   ├── Clientes.jsx              # Lista de clientes
+    │   │   ├── ClienteDetalle.jsx        # Detalle de cliente
+    │   │   └── RegistrarPago.jsx         # Formulario de pago
+    │   │
+    │   ├── 📂 services/                  # Servicios
+    │   │   └── api.js                    # Configuración de Axios
+    │   │
+    │   ├── 📄 App.jsx                    # Componente principal
+    │   ├── 📄 main.jsx                   # Entry point
+    │   └── 📄 index.css                  # Estilos globales
+    │
+    ├── 📄 index.html                     # HTML principal
+    ├── 📄 package.json                   # Dependencias Node.js
+    ├── 📄 vite.config.js                 # Configuración de Vite
+    ├── 📄 tailwind.config.js             # Configuración de TailwindCSS
+    ├── 📄 postcss.config.js              # Configuración de PostCSS
+    └── 📄 README.md                      # Documentación del frontend
+
+═══════════════════════════════════════════════════════════════════════
+
+🗄️  BASE DE DATOS (SQLite)
+═══════════════════════════════════════════════════════════════════════
+
+📊 Tablas:
+
+1. clientes_renta           # Clientes que rentan el sistema
+   - id, nombre_empresa, contacto_nombre, telefono, email
+   - plan, precio_mensual, fecha_inicio, estado
+   - licencia_key, fecha_creacion
+
+2. pagos_renta              # Pagos mensuales
+   - id, cliente_renta_id, monto, fecha_pago
+   - fecha_vencimiento, metodo_pago, referencia
+   - estado, dias_atraso, notas
+
+3. licencias                # Control de acceso
+   - id, cliente_renta_id, licencia_key
+   - fecha_activacion, fecha_expiracion, estado
+   - dispositivo_id, ultima_conexion
+
+4. usuarios                 # Administradores
+   - id, username, password_hash, nombre_completo
+   - email, rol, activo
+
+5. notificaciones           # Alertas del sistema
+   - id, cliente_renta_id, tipo, mensaje
+   - leida, fecha_creacion
+
+═══════════════════════════════════════════════════════════════════════
+
+🔌 API ENDPOINTS
+═══════════════════════════════════════════════════════════════════════
+
+🔐 Autenticación:
+   POST   /api/auth/login              # Iniciar sesión
+   GET    /api/auth/me                 # Usuario actual
+
+📊 Dashboard:
+   GET    /api/dashboard               # Datos del dashboard
+
+👥 Clientes:
+   GET    /api/clientes                # Lista de clientes
+   GET    /api/clientes/{id}           # Detalle de cliente
+   POST   /api/clientes                # Crear cliente
+   PUT    /api/clientes/{id}           # Actualizar cliente
+   POST   /api/clientes/{id}/suspend   # Suspender cliente
+
+💰 Pagos:
+   GET    /api/clientes/{id}/pagos     # Historial de pagos
+   POST   /api/pagos                   # Registrar pago
+
+🔑 Licencias:
+   GET    /api/licencias/verify/{key}  # Verificar licencia
+
+═══════════════════════════════════════════════════════════════════════
+
+🎨 PÁGINAS WEB
+═══════════════════════════════════════════════════════════════════════
+
+1. 🔐 Login                 (/login)
+   - Formulario de autenticación
+   - Validación de credenciales
+   - Redirección al dashboard
+
+2. 📊 Dashboard             (/)
+   - Resumen de ingresos mensuales
+   - Estado de clientes (al día, por vencer, atrasados)
+   - Estadísticas en tiempo real
+   - Acciones rápidas
+
+3. 👥 Lista de Clientes     (/clientes)
+   - Búsqueda por nombre
+   - Filtros por estado
+   - Tarjetas con información resumida
+   - Indicadores visuales de estado
+
+4. 📋 Detalle de Cliente    (/clientes/:id)
+   - Información completa del cliente
+   - Historial de pagos (últimos 6)
+   - Acciones: llamar, WhatsApp, registrar pago, suspender
+
+5. 💵 Registrar Pago        (/clientes/:id/pago)
+   - Formulario de registro de pago
+   - Múltiples métodos de pago
+   - Actualización automática de licencia
+
+═══════════════════════════════════════════════════════════════════════
+
+🛠️  TECNOLOGÍAS UTILIZADAS
+═══════════════════════════════════════════════════════════════════════
+
+Backend:
+   ✓ FastAPI              # Framework web moderno
+   ✓ Python 3.8+          # Lenguaje de programación
+   ✓ SQLite               # Base de datos
+   ✓ JWT                  # Autenticación
+   ✓ Pydantic             # Validación de datos
+   ✓ Uvicorn              # Servidor ASGI
+
+Frontend:
+   ✓ React 18             # Framework UI
+   ✓ Vite                 # Build tool ultra-rápido
+   ✓ TailwindCSS          # Framework CSS
+   ✓ React Router         # Navegación
+   ✓ Axios                # Cliente HTTP
+   ✓ Lucide React         # Iconos modernos
+   ✓ date-fns             # Manejo de fechas
+
+═══════════════════════════════════════════════════════════════════════
+
+✨ CARACTERÍSTICAS PRINCIPALES
+═══════════════════════════════════════════════════════════════════════
+
+✅ Gestión completa de clientes
+✅ Control de pagos mensuales
+✅ Sistema de licencias automático
+✅ Suspensión/activación de clientes
+✅ Dashboard con estadísticas en tiempo real
+✅ Búsqueda y filtros avanzados
+✅ Diseño responsive (móvil, tablet, desktop)
+✅ Autenticación segura con JWT
+✅ API REST documentada (Swagger)
+✅ Historial completo de pagos
+✅ Acciones rápidas (llamar, WhatsApp)
+✅ Indicadores visuales de estado
+✅ Múltiples métodos de pago
+
+═══════════════════════════════════════════════════════════════════════
+
+🚀 INICIO RÁPIDO
+═══════════════════════════════════════════════════════════════════════
+
+1. Doble clic en: start_backend.bat
+2. Doble clic en: start_frontend.bat
+3. Abre: http://localhost:3000
+4. Login: admin / admin123
+
+═══════════════════════════════════════════════════════════════════════
+
+📦 TAMAÑO DEL PROYECTO
+═══════════════════════════════════════════════════════════════════════
+
+Backend:
+   - Código fuente: ~50 KB
+   - Dependencias: ~100 MB
+   - Base de datos: ~100 KB (vacía)
+
+Frontend:
+   - Código fuente: ~100 KB
+   - Dependencias: ~300 MB
+   - Build optimizado: ~500 KB
+
+Total: ~400 MB (con dependencias)
+
+═══════════════════════════════════════════════════════════════════════
+
+💰 COSTOS DE HOSTING (Estimados)
+═══════════════════════════════════════════════════════════════════════
+
+Desarrollo:
+   ✓ Gratis (localhost)
+
+Producción:
+   ✓ Servidor: $5-10/mes (DigitalOcean/Heroku)
+   ✓ Dominio: $10/año
+   ✓ SSL: Gratis (Let's Encrypt)
+   
+   Total: ~$7/mes
+
+═══════════════════════════════════════════════════════════════════════
+
+🎯 ROADMAP FUTURO
+═══════════════════════════════════════════════════════════════════════
+
+Fase 1 (Actual):
+   ✅ Sistema básico funcional
+   ✅ CRUD de clientes
+   ✅ Registro de pagos
+   ✅ Control de licencias
+
+Fase 2 (Próxima):
+   ⏳ Notificaciones push
+   ⏳ Reportes en PDF
+   ⏳ Gráficas de ingresos
+   ⏳ Exportar a Excel
+
+Fase 3 (Futuro):
+   ⏳ App móvil nativa
+   ⏳ Pagos en línea
+   ⏳ Multi-usuario
+   ⏳ Roles y permisos
+
+═══════════════════════════════════════════════════════════════════════
+
+📞 SOPORTE
+═══════════════════════════════════════════════════════════════════════
+
+📧 Email: soporte@anthonysystem.com
+🌐 Web: www.anthonysystem.app
+📱 WhatsApp: +1 (809) XXX-XXXX
+
+═══════════════════════════════════════════════════════════════════════
+
+Creado con ❤️ por Anthony
+© 2024 Anthony System - Todos los derechos reservados

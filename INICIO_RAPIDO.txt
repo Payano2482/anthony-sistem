@@ -1,0 +1,93 @@
+╔══════════════════════════════════════════════════════════════╗
+║                    ANTHONY SYSTEM                            ║
+║              Sistema de Gestión de Rentas                    ║
+╚══════════════════════════════════════════════════════════════╝
+
+🚀 INICIO RÁPIDO
+═══════════════════════════════════════════════════════════════
+
+PASO 1: Iniciar Backend
+------------------------
+1. Doble clic en: start_backend.bat
+2. Espera a que diga "Uvicorn running on..."
+3. NO cierres esta ventana
+
+PASO 2: Iniciar Frontend
+-------------------------
+1. Doble clic en: start_frontend.bat
+2. Espera a que se abra el navegador
+3. NO cierres esta ventana
+
+PASO 3: Acceder a la Aplicación
+--------------------------------
+URL: http://localhost:3000
+
+Usuario: admin
+Contraseña: admin123
+
+═══════════════════════════════════════════════════════════════
+
+📚 DOCUMENTACIÓN API
+═══════════════════════════════════════════════════════════════
+http://localhost:8000/docs
+
+═══════════════════════════════════════════════════════════════
+
+🔧 REQUISITOS
+═══════════════════════════════════════════════════════════════
+✓ Python 3.8 o superior
+✓ Node.js 16 o superior
+✓ pip (gestor de paquetes Python)
+✓ npm (gestor de paquetes Node)
+
+═══════════════════════════════════════════════════════════════
+
+⚠️ IMPORTANTE
+═══════════════════════════════════════════════════════════════
+- Cambia la contraseña por defecto en producción
+- Haz backups regulares de: backend/database/anthony_system.db
+- Configura HTTPS en producción
+
+═══════════════════════════════════════════════════════════════
+
+📞 SOPORTE
+═══════════════════════════════════════════════════════════════
+- Lee el README.md para más información
+- Revisa backend/README.md para detalles del API
+- Revisa frontend/README.md para detalles del frontend
+
+═══════════════════════════════════════════════════════════════
+
+✨ FUNCIONALIDADES PRINCIPALES
+═══════════════════════════════════════════════════════════════
+✓ Dashboard con estadísticas en tiempo real
+✓ Gestión completa de clientes
+✓ Registro de pagos mensuales
+✓ Control automático de licencias
+✓ Suspensión/activación de clientes
+✓ Historial de pagos
+✓ Búsqueda y filtros avanzados
+✓ Diseño responsive (funciona en móvil)
+✓ Acciones rápidas (llamar, WhatsApp)
+
+═══════════════════════════════════════════════════════════════
+
+💰 PLANES DISPONIBLES
+═══════════════════════════════════════════════════════════════
+- Básico: Para pequeños negocios
+- Premium: Funcionalidades avanzadas
+- Empresarial: Para grandes empresas
+
+═══════════════════════════════════════════════════════════════
+
+🎯 PRÓXIMOS PASOS
+═══════════════════════════════════════════════════════════════
+1. Cambiar credenciales por defecto
+2. Agregar tus primeros clientes
+3. Configurar métodos de pago
+4. Personalizar planes y precios
+5. Desplegar en producción
+
+═══════════════════════════════════════════════════════════════
+
+¡Listo para usar! 🎉
