@@ -1,10 +1,21 @@
 import requests
 import json
-from auth import authenticate_user, get_password_hash
+from auth import (
+    authenticate_user,
+    get_password_hash,
+    users_exist,
+    create_user,
+)
 
 print("=" * 60)
 print("PRUEBA DE AUTENTICACIÓN")
 print("=" * 60)
+
+# Crear usuario temporal si no existe
+if not users_exist():
+    print("\n⚠️  No existen usuarios. Creando usuario temporal 'admin'...")
+    create_user("admin", "admin123", "Administrador Temporal")
+    print("   Usuario creado.")
 
 # Probar autenticación directa
 print("\n1. Probando función authenticate_user...")

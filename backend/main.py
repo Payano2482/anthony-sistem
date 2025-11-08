@@ -10,7 +10,13 @@ from typing import List, Optional
 
 from config import settings
 from models import *
-from auth import authenticate_user, create_access_token, get_current_user
+from auth import (
+    authenticate_user,
+    create_access_token,
+    get_current_user,
+    users_exist,
+    create_user
+)
 from database_service import db_service
 import webauthn_service
 
@@ -32,9 +38,52 @@ app.add_middleware(
 
 # ==================== AUTENTICACIÓN ====================
 
+@app.get("/api/auth/setup-status", tags=["Autenticación"])
+async def setup_status():
+    """Indica si es necesario crear el primer usuario"""
+    return {"requires_setup": not users_exist()}
+
+
+@app.post(
+    "/api/auth/setup",
+    response_model=Token,
+    tags=["Autenticación"],
+    status_code=status.HTTP_201_CREATED
+)
+async def setup_admin(user_data: UserSetup):
+    """Registrar el primer usuario administrador"""
+    if users_exist():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El sistema ya cuenta con usuarios registrados"
+        )
+    
+    user = create_user(
+        username=user_data.username,
+        password=user_data.password,
+        nombre_completo=user_data.nombre_completo,
+        email=user_data.email,
+        rol="superadmin",
+        activo=True
+    )
+    
+    access_token = create_access_token(
+        data={"sub": user["username"]},
+        expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
 @app.post("/api/auth/login", response_model=Token, tags=["Autenticación"])
 async def login(user_data: UserLogin):
     """Iniciar sesión"""
+    if not users_exist():
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Configuración inicial pendiente"
+        )
+    
     user = authenticate_user(user_data.username, user_data.password)
     if not user:
         raise HTTPException(

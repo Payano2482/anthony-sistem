@@ -131,6 +131,13 @@ class User(BaseModel):
     class Config:
         from_attributes = True
 
+
+class UserSetup(BaseModel):
+    username: str = Field(min_length=3, max_length=50)
+    password: str = Field(min_length=6, max_length=128)
+    nombre_completo: str = Field(min_length=3, max_length=120)
+    email: Optional[EmailStr] = None
+
 # Modelos de Dashboard
 class ResumenMes(BaseModel):
     por_cobrar: float

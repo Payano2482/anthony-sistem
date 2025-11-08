@@ -14,8 +14,8 @@ build/
 
 # Base de datos
 # database/*.db
-backend/database/*.db
-backend/database/*.db-journal
+# backend/database/*.db
+# backend/database/*.db-journal
 
 # Variables de entorno
 .env

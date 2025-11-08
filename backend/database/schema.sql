@@ -83,7 +83,4 @@ CREATE INDEX IF NOT EXISTS idx_pagos_fecha ON pagos_renta(fecha_vencimiento);
 CREATE INDEX IF NOT EXISTS idx_licencias_key ON licencias(licencia_key);
 CREATE INDEX IF NOT EXISTS idx_notificaciones_leida ON notificaciones(leida);
 
--- Datos iniciales: Usuario administrador por defecto
--- Usuario: admin, Contraseña: admin123 (cambiar en producción)
-INSERT OR IGNORE INTO usuarios (id, username, password_hash, nombre_completo, rol) 
-VALUES (1, 'admin', '$2b$12$oI21jBnaq7rg01OeNVcmjeNKIISmovJ.A5rw7vQMWEH9KUEcYcir.', 'Anthony', 'superadmin');
+-- No se inserta usuario por defecto; el primer administrador se crea desde la aplicación.
