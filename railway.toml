@@ -1,8 +1,10 @@
 [build]
   root = "backend"
+  builder = "NIXPACKS"
+  buildCommand = "pip install -r requirements.txt"
 
 [deploy]
-  startCommand = "uvicorn main:app --host 0.0.0.0 --port $PORT"
+  startCommand = "./start.sh"
 
 [env]
   ACCESS_TOKEN_EXPIRE_MINUTES = "1440"
