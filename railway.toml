@@ -1,7 +1,9 @@
 [build]
   root = "backend"
   builder = "NIXPACKS"
-  buildCommand = "pip install -r requirements.txt"
+
+[build.env]
+  PYTHON_VERSION = "3.11"
 
 [deploy]
   startCommand = "./start.sh"
