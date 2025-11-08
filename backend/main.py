@@ -20,11 +20,37 @@ from auth import (
 from database_service import db_service
 import webauthn_service
 
+# Inicializar base de datos y usuario admin al inicio
+def init_on_startup():
+    """Inicializa la base de datos y crea el usuario admin si no existe"""
+    try:
+        from database.init_db import init_database
+        print("🚀 Inicializando base de datos...")
+        init_database()
+        print("✅ Base de datos inicializada")
+        
+        if not users_exist():
+            print("👤 Creando usuario administrador...")
+            user = create_user(
+                username="admin",
+                password="admin123",
+                nombre_completo="Administrador",
+                email=None,
+                rol="superadmin",
+                activo=True,
+            )
+            print(f"✅ Usuario admin creado: {user['username']}")
+        else:
+            print("✅ Usuario administrador ya existe")
+    except Exception as e:
+        print(f"⚠️  Error en inicialización: {e}")
+
 # Crear aplicación
 app = FastAPI(
     title="Anthony System API",
     description="Sistema de Gestión de Rentas",
-    version="1.0.0"
+    version="1.0.0",
+    on_startup=[init_on_startup]
 )
 
 # Configurar CORS
