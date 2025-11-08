@@ -1,4 +1,5 @@
 # Python
+# database/*.db
 __pycache__/
 *.py[cod]
 *$py.class
@@ -12,6 +13,7 @@ dist/
 build/
 
 # Base de datos
+# database/*.db
 backend/database/*.db
 backend/database/*.db-journal
 
